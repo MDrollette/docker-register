@@ -37,8 +37,8 @@ except ValueError:
 if s == "service" and e != "":
     if e != "prod":
         n = n + "-" + e
-    client.write("/vulcand/backends/"+n+"/backend", "{\"Type\": \"http\"}")
-    client.write("/vulcand/frontends/"+n+"/frontend", "{\"Type\": \"http\", \"BackendId\": \""+n+"\", \"Route\": \"Host(`"+n+".service.ordermygear.com`)\"}")
+    client.write("/vulcand/backends/"+n+"/backend", "{\"Type\": \"http\"}", ttl=10)
+    client.write("/vulcand/frontends/"+n+"/frontend", "{\"Type\": \"http\", \"BackendId\": \""+n+"\", \"Route\": \"Host(`"+n+".service.ordermygear.com`)\"}", ttl=10)
     client.write("/vulcand/backends/"+n+"/servers/{{printf "%.*s" 12 $value.ID}}", "{\"URL\": \"http://{{ $address.IP }}:{{ $address.HostPort }}\"}", ttl=10)
 
 {{ end }}
